@@ -5,22 +5,19 @@
 
 declare html=$(curl -s --compressed http://ru.ufsc.br/ru/)
 
+
 # mostra somente dia atual se não for passado o parâmetro `all`
-[ "$1" != "all" ] && declare weekday=`date +%u`
+[ "$1" != "all" ] && [ "$1" == "" ] && declare weekday=`LANG=pt_BR.UTF-8 date +%a`
 
-case "$weekday" in
-	1) weekday="Segunda-feira";;
-	2) weekday="Terça-feira";;
-	3) weekday="Quarta-feira";;
-	4) weekday="Quinta-feira";;
-	5) weekday="Sexta-feira";;
-	6) weekday="Sábado";;
-	7) weekday="Domingo";;
-esac
+# mostra data passada por parâmetro
+[ "$1" != "all" ] && [ "$1" != "" ] && declare weekday=$1
 
-declare beginsearch="<td>[<strong> *]*<span style=\"color: #333399\">$weekday"
 
-                     # busca cardapio do(s) dia(s)    # remove tags     # remove linhas e inicios em branco
-echo -e "$html" | sed -n "/$beginsearch/,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//'
+# pega somente o conteúdo da tabela do cardápio
+declare menu_itself=$(echo -e "$html" | sed -n '/Sobremesa/,/Ingredientes/p' | sed -e '1d;$d')
+
+
+                          #pega apenas dia da semana          # remove tags      # remove linhas e inicios em branco
+echo -e "$menu_itself" | sed -n "/${weekday^} */,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//'
 
 
