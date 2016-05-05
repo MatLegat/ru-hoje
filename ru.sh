@@ -18,6 +18,6 @@ declare menu_itself=$(echo -e "$html" | sed -n '/Sobremesa/,/Ingredientes/p' | s
 
 
                           #pega apenas dia da semana          # remove tags      # remove linhas e inicios em branco
-echo -e "$menu_itself" | sed -n "/${weekday^} */,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//'
+echo -e "$menu_itself" | sed -n "/>${weekday^} */,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//'
 
 
