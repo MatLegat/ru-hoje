@@ -7,7 +7,7 @@ declare html=$(curl -s --compressed http://ru.ufsc.br/ru/)
 
 
 # mostra somente dia atual se não for passado o parâmetro `all`
-[ "$1" != "all" ] && [ "$1" == "" ] && declare weekday=`LANG=pt_BR.UTF-8 date +%a`
+[ "$1" != "all" ] && [ "$1" == "" ] && declare weekday=`LANG=pt_BR.UTF-8 date +%A`
 
 # mostra data passada por parâmetro
 [ "$1" != "all" ] && [ "$1" != "" ] && declare weekday=$1
