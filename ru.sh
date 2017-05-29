@@ -1,5 +1,3 @@
-# copyright Matteus Legat 2016
-#
 # script que mostra o cardápio do RU UFSC de hoje
 #
 
@@ -18,6 +16,6 @@ declare menu_itself=$(echo -e "$html" | sed -n '/Sobremesa/,/Ingredientes/p' | s
 
 
                           #pega apenas dia da semana          # remove tags      # remove linhas e inicios em branco
-echo -e "$menu_itself" | sed -n "/>${weekday^} */,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//' | sed 's/&nbsp;//g'
+echo -e "$menu_itself" | sed -n "/>${weekday} */I,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//' | sed 's/&nbsp;//g'
 
 
