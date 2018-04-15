@@ -1,5 +1,6 @@
+#!/usr/bin/env bash
+
 # script que mostra o cardápio do RU UFSC de hoje
-#
 
 declare html=$(curl -s --compressed http://ru.ufsc.br/ru/)
 
@@ -12,10 +13,7 @@ declare html=$(curl -s --compressed http://ru.ufsc.br/ru/)
 
 
 # pega somente o conteúdo da tabela do cardápio
-declare menu_itself=$(echo -e "$html" | sed -n '/Sobremesa/,/Ingredientes/p' | sed -e '1d;$d')
-
+declare menu_itself=$(echo -e "$html" | sed -n '/Cardápio sujeito a alterações/,/Ingredientes/p' | sed -e '1d;$d')
 
                           #pega apenas dia da semana          # remove tags      # remove linhas e inicios em branco
-echo -e "$menu_itself" | sed -n "/>${weekday} */I,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//' | sed 's/&nbsp;//g'
-
-
+echo -e "$menu_itself" | sed -n "/strong>${weekday} */I,/<\/tr>/p" | sed -e 's/<[^>]*>//g;/^ *[&nbsp;]*$/d;s/^[ * *\t]*//' | sed 's/&nbsp;//g'
